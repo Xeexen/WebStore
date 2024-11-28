@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class JPAProductRepository implements ProductRepository {
 
-    private final JPAImplProductRepository implRepository;
+    private final   JPAImplProductRepository implRepository;
 
     public JPAProductRepository(JPAImplProductRepository implRepository) {
         this.implRepository = implRepository;
@@ -38,5 +38,16 @@ public class JPAProductRepository implements ProductRepository {
     @Override
     public void findById(String id) {
         this.implRepository.findById(id);
+    }
+
+    @Override
+    public List<Product> updateAllStock(List<Product> products) {
+        for (Product product: products){
+            if(product.getUnitsInStock() < 500){
+                product.setUnitsInStock(product.getUnitsInStock() + 1000);
+                this.update(product);
+            }
+        }
+        return this.index();
     }
 }

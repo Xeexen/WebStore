@@ -22,17 +22,6 @@ public class ProductController {
 
     @GetMapping("/products")
     public String index(Model model) {
-//        Product product = new Product();
-//        product.setId("P1234");
-//        product.setName("Iphone 6s");
-//        product.setUnitPrice(500.00);
-//        product.setDescription("Telefono iphone 6s with muchas cositas");
-//        product.setManufacturer(7.5);
-//        product.setCategory("Smartphones");
-//        product.setUnitsInStock(20L);
-//        product.setUnitsInOrder(10L);
-//        product.setDiscontinued(false);
-//        product.setCondition("Nuevo");
         List<Product> products = repository.indexProducts();
         System.out.println(products);
         model.addAttribute("title", "Productos");
@@ -56,6 +45,20 @@ public class ProductController {
             System.out.println(e.getMessage());
         }
         return "redirect:/products";
+    }
+
+    @GetMapping("/product/update/stock")
+    public String updateStock(Model model, RedirectAttributes redirectAttributes){
+        try{
+            List<Product> products = repository.indexProducts();
+            List<Product> newProducts = this.repository.updateAllProductStock();
+            model.addAttribute("title", "Productos Actualizados");
+            model.addAttribute("products", products);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return "Product";
+
     }
     
 }

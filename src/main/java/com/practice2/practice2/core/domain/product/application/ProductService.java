@@ -70,4 +70,10 @@ public class ProductService {
             throw e;
         }
     }
+
+    public List<Product> updateAllProductStock(){
+        List<Product> products = repository.index();
+        return repository.updateAllStock(products);
+
+    }
 }

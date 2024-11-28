@@ -12,4 +12,6 @@ public interface ProductRepository {
     void delete(String Id);
 
     void findById(String id);
+
+    List<Product> updateAllStock(List<Product> products);
 }
