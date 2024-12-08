@@ -5,12 +5,15 @@
     <title>[[${title}]]</title>
 </head>
 <body>
-
-<div>
-    <h1>
-        Crear nuevo producto
-    </h1>
-    Porfavor llena el siguiente registro para
+<div style="background: darkgray; padding: 10px">
+    <div class="jumbotron">
+        <div class="container">
+            <h1>
+                Crear nuevo producto
+            </h1>
+            <p> Porfavor llena el siguiente registro para</p>
+        </div>
+    </div>
 </div>
 <div>
     <form class="form-group" th:action="@{add}" enctype="multipart/form-data" method="post"
@@ -45,7 +48,7 @@
             <div class="form-group row">
                 <label class="col-sm-3 col-form-label" for="manufacturer">Fabricante</label>
                 <div class="col-sm-9">
-                    <input type="text"  th:field="*{manufacturer}" required
+                    <input type="text" th:field="*{manufacturer}" required
                            class="form-control" id="manufacturer"/>
                 </div>
             </div>

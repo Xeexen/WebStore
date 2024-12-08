@@ -76,4 +76,24 @@ public class ProductService {
         return repository.updateAllStock(products);
 
     }
+
+    public List<Product> findProductsByCategory(String category) {
+        try {
+            List<Product> products = repository.findByCategory(category);
+            logger.info("Products found by category: {}", category);
+            return products;
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    public List<Product> getProductsByFilter(String category, String manufacturer) {
+        try{
+            return repository.getProductsByFilter(category, manufacturer);
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            throw e;
+        }
+    }
 }

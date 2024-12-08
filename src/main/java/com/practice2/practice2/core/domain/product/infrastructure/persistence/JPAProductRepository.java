@@ -2,6 +2,9 @@ package com.practice2.practice2.core.domain.product.infrastructure.persistence;
 
 import com.practice2.practice2.core.domain.product.domain.Product;
 import com.practice2.practice2.core.domain.product.domain.ProductRepository;
+import jdk.jfr.Category;
+import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
 @Service
 public class JPAProductRepository implements ProductRepository {
 
-    private final   JPAImplProductRepository implRepository;
+    private final JPAImplProductRepository implRepository;
 
     public JPAProductRepository(JPAImplProductRepository implRepository) {
         this.implRepository = implRepository;
@@ -42,12 +45,24 @@ public class JPAProductRepository implements ProductRepository {
 
     @Override
     public List<Product> updateAllStock(List<Product> products) {
-        for (Product product: products){
-            if(product.getUnitsInStock() < 500){
+        for (Product product : products) {
+            if (product.getUnitsInStock() < 500) {
                 product.setUnitsInStock(product.getUnitsInStock() + 1000);
                 this.update(product);
             }
         }
         return this.index();
     }
+
+    @Override
+    public List<Product> findByCategory(String category) {
+        this.implRepository.findProductByCategory(category);
+        return List.of();
+    }
+
+    @Override
+    public List<Product> getProductsByFilter(String category, String manufacturer) {
+        return this.implRepository.findByCategoryAndAndManufacturer(category, manufacturer);
+    }
+
 }

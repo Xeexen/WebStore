@@ -10,4 +10,8 @@ import java.util.Optional;
 
 @Repository
 public interface JPAImplProductRepository extends JpaRepository<Product, String> {
+    void findProductByCategory(String category);
+
+    List<Product> findByCategoryAndAndManufacturer(String category, String manufacturer);
 }
+

@@ -13,5 +13,9 @@ public interface ProductRepository {
 
     void findById(String id);
 
+    List<Product> findByCategory(String category);
+
     List<Product> updateAllStock(List<Product> products);
+
+    List<Product> getProductsByFilter (String category, String manufacturer);
 }

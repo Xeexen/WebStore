@@ -3,11 +3,10 @@ package com.practice2.practice2.core.domain.product.domain;
 import jakarta.persistence.*;
 
 @Entity
-//@Table(name = "products", schema = "PUBLIC")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     private String name;
 
@@ -30,8 +29,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String name, double unitPrice, String description, String manufacturer, String category, Long unitsInStock, Long unitsInOrder, boolean discontinued, String condition) {
-        this.id = id;
+    public Product(String name, double unitPrice, String description, String manufacturer, String category, Long unitsInStock, Long unitsInOrder, boolean discontinued, String condition) {
         this.name = name;
         this.unitPrice = unitPrice;
         this.description = description;
@@ -43,12 +41,8 @@ public class Product {
         this.condition = condition;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

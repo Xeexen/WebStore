@@ -2,9 +2,11 @@ package com.practice2.practice2.core.domain.product.infrastructure.httpControlle
 
 import com.practice2.practice2.core.domain.product.application.ProductService;
 import com.practice2.practice2.core.domain.product.domain.Product;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,9 +23,16 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public String index(Model model) {
+    public String index(Model model, @Param("keyword") String keyword) {
+
         List<Product> products = repository.indexProducts();
-        System.out.println(products);
+
+        if (keyword == null) {
+            repository.indexProducts().forEach(products::add);
+        } else {
+            repository.findProductsByCategory(keyword).forEach(products::add);
+            model.addAttribute("keyword", keyword);
+        }
         model.addAttribute("title", "Productos");
         model.addAttribute("products", products);
         return "Product";
@@ -55,6 +64,19 @@ public class ProductController {
             model.addAttribute("title", "Productos Actualizados");
             model.addAttribute("products", products);
         }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return "Product";
+    }
+
+    @GetMapping("filterProducts/{category}/{manufacturer}")
+    public String filterProducts(@PathVariable String category, @PathVariable String manufacturer, Model model) {
+        try {
+            List<Product> products = repository.getProductsByFilter(category, manufacturer);
+            model.addAttribute("title", "Productos Filtrados");
+            model.addAttribute("products", products);
+            System.out.println(products);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return "Product";
