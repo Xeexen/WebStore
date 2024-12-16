@@ -2,12 +2,10 @@ package com.practice2.practice2.core.domain.product.infrastructure.persistence;
 
 import com.practice2.practice2.core.domain.product.domain.Product;
 import com.practice2.practice2.core.domain.product.domain.ProductRepository;
-import jdk.jfr.Category;
-import org.springframework.data.domain.Example;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JPAProductRepository implements ProductRepository {
@@ -39,8 +37,8 @@ public class JPAProductRepository implements ProductRepository {
     }
 
     @Override
-    public void findById(String id) {
-        this.implRepository.findById(id);
+    public Optional<Product> findById(String id) {
+        return this.implRepository.findById(id);
     }
 
     @Override

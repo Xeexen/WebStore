@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductController {
@@ -27,12 +27,12 @@ public class ProductController {
 
         List<Product> products = repository.indexProducts();
 
-        if (keyword == null) {
-            repository.indexProducts().forEach(products::add);
-        } else {
-            repository.findProductsByCategory(keyword).forEach(products::add);
-            model.addAttribute("keyword", keyword);
-        }
+//        if (keyword == null) {
+//            repository.indexProducts().forEach(products::add);
+//        } else {
+//            repository.findProductsByCategory(keyword).forEach(products::add);
+//            model.addAttribute("keyword", keyword);
+//        }
         model.addAttribute("title", "Productos");
         model.addAttribute("products", products);
         return "Product";
@@ -82,5 +82,22 @@ public class ProductController {
         return "Product";
 
     }
-    
+
+    @GetMapping("filterById/{id}")
+    public String findProductById(@PathVariable String id, Model model) {
+        try {
+            Optional<Product> optionalProduct = repository.showProduct(id);
+            model.addAttribute("title", "Productos Filtrados");
+
+            if (optionalProduct.isPresent()) {
+                model.addAttribute("product", optionalProduct.get());
+            } else {
+                model.addAttribute("product", null);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "ShowProduct";
+    }
+
 }
