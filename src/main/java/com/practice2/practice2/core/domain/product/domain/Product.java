@@ -1,6 +1,8 @@
 package com.practice2.practice2.core.domain.product.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity
 public class Product {
@@ -22,6 +24,7 @@ public class Product {
 
     private Long unitsInOrder;
 
+    @ColumnDefault("false")
     private boolean discontinued;
 
     private String condition;
