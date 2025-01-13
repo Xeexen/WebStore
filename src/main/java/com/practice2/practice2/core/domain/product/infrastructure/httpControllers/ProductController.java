@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -48,22 +49,22 @@ public class ProductController {
 
     @PostMapping("/product/add")
     public String create(Product product, RedirectAttributes redirectAttributes) {
-        try{
+        try {
             this.repository.createProduct(product);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return "redirect:/products";
     }
 
     @GetMapping("/product/update/stock")
-    public String updateStock(Model model, RedirectAttributes redirectAttributes){
-        try{
+    public String updateStock(Model model, RedirectAttributes redirectAttributes) {
+        try {
             List<Product> products = repository.indexProducts();
             List<Product> newProducts = this.repository.updateAllProductStock();
             model.addAttribute("title", "Productos Actualizados");
             model.addAttribute("products", products);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return "Product";
@@ -98,6 +99,24 @@ public class ProductController {
             System.out.println(e.getMessage());
         }
         return "ShowProduct";
+    }
+
+    @PostMapping("updateProduct")
+    public String updateProduct(Product product, RedirectAttributes redirectAttributes) {
+        try {
+            this.repository.updateProduct(product);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "redirect:/products";
+    }
+
+    @GetMapping("/product/update/{id}")
+    public String updateProduct(Model model, @PathVariable String id) {
+        Optional<Product> product = this.repository.showProduct(id);
+        model.addAttribute("title", "Editar Producto");
+        model.addAttribute("product", product);
+        return "Product_form";
     }
 
 }

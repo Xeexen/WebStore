@@ -21,9 +21,7 @@
 <div>
     <div class="flex" style="padding-left: 100px">
         <div class="col-4">
-            <form class="form-group" th:action="@{add}" enctype="multipart/form-data" method="post"
-                  th:object="${product}">
-                <input type="hidden" th:field="*{id}"/>
+            <form class="form-group" th:action="@{${id != null} ? '/updateProduct' : '/product/add'}" enctype="multipart/form-data" th:object="${product}" th:method="${id != null} ? 'post' : 'put'">
                 <div class="p-3">
                     <div class="form-group row my-2">
                         <label class="col-sm-3 col-form-label" for="name">Producto</label>
@@ -88,7 +86,7 @@
                                 <input type="radio" th:field="*{condition}" value="nuevo">
                                 <label class="col-sm-3 col-form-label" checked="true">Nuevo</label>
                                 <input type="radio" th:field="*{condition}" value="usado">
-                                <label class="col-sm-3 col-form-label" >Usado</label>
+                                <label class="col-sm-3 col-form-label">Usado</label>
                                 <input type="radio" th:field="*{condition}" value="refurbished">
                                 <label class="col-sm-3 col-form-label">Refurbished</label>
                             </li>
