@@ -5,10 +5,8 @@ import com.practice2.practice2.core.domain.product.domain.Product;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -48,9 +46,19 @@ public class ProductController {
     }
 
     @PostMapping("/product/add")
-    public String create(Product product, RedirectAttributes redirectAttributes) {
+    public String create(Product product, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         try {
-            this.repository.createProduct(product);
+            this.repository.createProduct(product, file);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "redirect:/products";
+    }
+
+    @PostMapping("/updateProduct/{id}")
+    public String updateProduct(@PathVariable String id, @ModelAttribute("product") Product product, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+        try {
+            this.repository.updateProduct(product, file);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -101,22 +109,23 @@ public class ProductController {
         return "ShowProduct";
     }
 
-    @PostMapping("updateProduct")
-    public String updateProduct(Product product, RedirectAttributes redirectAttributes) {
-        try {
-            this.repository.updateProduct(product);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return "redirect:/products";
-    }
+
 
     @GetMapping("/product/update/{id}")
     public String updateProduct(Model model, @PathVariable String id) {
-        Optional<Product> product = this.repository.showProduct(id);
-        model.addAttribute("title", "Editar Producto");
-        model.addAttribute("product", product);
-        return "Product_form";
+        Optional<Product> productOptional = this.repository.showProduct(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            String imagePath = product.getImage();
+            model.addAttribute("title", "Editar Producto");
+            model.addAttribute("product", product);
+            model.addAttribute("imagePath", imagePath);
+            return "Product_edit_form";
+        } else {
+            // Manejar el caso donde el producto no se encuentra
+            return "redirect:/products";
+        }
     }
+
 
 }

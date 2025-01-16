@@ -27,6 +27,9 @@
             <div class="col-sm-4" th:each="product: ${products}" style="padding-bottom: 18px;">
                 <div class="img-thumbnail">
                     <div class="caption">
+                        <div th:if="${product.image != null}">
+                            <img th:src="@{${product.image}}" alt="Imagen del producto" class="img-fluid"/>
+                        </div>
                         <h2>[[${product.name}]]</h2>
                         <p>[[${product.description}]]</p>
                         <p>[[${product.unitPrice}]]</p>
@@ -35,7 +38,8 @@
                             <i class="bi bi-info-circle"></i>
                             Details
                         </a>
-                        <a th:href="@{'/product/update/' + ${product.id}}" title="Update" class="btn-primary justify-content-end">
+                        <a th:href="@{'/product/update/' + ${product.id}}" title="Update"
+                           class="btn-primary justify-content-end">
                             <i class="bi bi-pen"></i>
                             Edit
                         </a>
