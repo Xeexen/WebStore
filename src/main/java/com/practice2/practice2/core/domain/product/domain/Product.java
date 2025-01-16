@@ -1,5 +1,6 @@
 package com.practice2.practice2.core.domain.product.domain;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -29,10 +30,13 @@ public class Product {
 
     private String condition;
 
+    @Nullable
+    private String image;
+
     public Product() {
     }
 
-    public Product(String name, double unitPrice, String description, String manufacturer, String category, Long unitsInStock, Long unitsInOrder, boolean discontinued, String condition) {
+    public Product(String name, double unitPrice, String description, String manufacturer, String category, Long unitsInStock, Long unitsInOrder, boolean discontinued, String condition, String image) {
         this.name = name;
         this.unitPrice = unitPrice;
         this.description = description;
@@ -42,6 +46,7 @@ public class Product {
         this.unitsInOrder = unitsInOrder;
         this.discontinued = discontinued;
         this.condition = condition;
+        this.image = image;
     }
 
     public String getId() {
@@ -120,6 +125,14 @@ public class Product {
         this.condition = condition;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -127,12 +140,13 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", description='" + description + '\'' +
-                ", manufacturer=" + manufacturer +
+                ", manufacturer='" + manufacturer + '\'' +
                 ", category='" + category + '\'' +
                 ", unitsInStock=" + unitsInStock +
                 ", unitsInOrder=" + unitsInOrder +
                 ", discontinued=" + discontinued +
                 ", condition='" + condition + '\'' +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

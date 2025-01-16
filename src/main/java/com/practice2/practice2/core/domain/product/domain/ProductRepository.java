@@ -1,5 +1,7 @@
 package com.practice2.practice2.core.domain.product.domain;
 
+import java.awt.*;
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,5 +20,7 @@ public interface ProductRepository {
 
     List<Product> updateAllStock(List<Product> products);
 
-    List<Product> getProductsByFilter (String category, String manufacturer);
+    List<Product> getProductsByFilter(String category, String manufacturer);
+
+    void addImage(File file);
 }
