@@ -26,11 +26,11 @@ public class ProductService {
     public void createProduct(Product product, MultipartFile imageFile) throws IOException {
 
         try {
+
+            Product product1 = repository.create(product);
             if (imageFile != null && !imageFile.isEmpty()) {
-                String imagePath = saveImage(imageFile, product.getId());
-                 product.setImage(imagePath);
+                updateProduct(product1, imageFile);
             }
-            repository.create(product);
             logger.info("Product created: {}", product);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -39,7 +39,7 @@ public class ProductService {
 
     }
 
-    public void updateProduct(Product product, MultipartFile imageFile) throws IOException  {
+    public void updateProduct(Product product, MultipartFile imageFile) throws IOException {
         try {
             if (imageFile != null && !imageFile.isEmpty()) {
                 String imagePath = saveImage(imageFile, product.getId());
@@ -84,7 +84,7 @@ public class ProductService {
         }
     }
 
-    public List<Product> updateAllProductStock(){
+    public List<Product> updateAllProductStock() {
         List<Product> products = repository.index();
         return repository.updateAllStock(products);
 
@@ -102,9 +102,9 @@ public class ProductService {
     }
 
     public List<Product> getProductsByFilter(String category, String manufacturer) {
-        try{
+        try {
             return repository.getProductsByFilter(category, manufacturer);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error(e.getMessage());
             throw e;
         }
@@ -136,5 +136,9 @@ public class ProductService {
         file.transferTo(dest);
 
         return relativeFilePath;
+    }
+
+    public String xmlView(Product product) {
+        return repository.xmlView(product);
     }
 }

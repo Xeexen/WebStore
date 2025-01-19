@@ -1,14 +1,12 @@
 package com.practice2.practice2.core.domain.product.domain;
 
-import java.awt.*;
-import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository {
     List<Product> index();
 
-    void create(Product product);
+    Product create(Product product);
 
     void update(Product product);
 
@@ -22,5 +20,5 @@ public interface ProductRepository {
 
     List<Product> getProductsByFilter(String category, String manufacturer);
 
-    void addImage(File file);
+    String xmlView(Product product);
 }

@@ -2,11 +2,8 @@ package com.practice2.practice2.core.domain.product.infrastructure.persistence;
 
 import com.practice2.practice2.core.domain.product.domain.Product;
 import com.practice2.practice2.core.domain.product.domain.ProductRepository;
-import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
-import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,9 +22,10 @@ public class JPAProductRepository implements ProductRepository {
     }
 
     @Override
-    public void create(Product product) {
+    public Product create(Product product) {
         this.implRepository.save(product);
 
+        return product;
     }
 
     @Override
@@ -68,7 +66,7 @@ public class JPAProductRepository implements ProductRepository {
     }
 
     @Override
-    public void addImage(File file) {
-
+    public String xmlView(Product product) {
+        return "";
     }
 }

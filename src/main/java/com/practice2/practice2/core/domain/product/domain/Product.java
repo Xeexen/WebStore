@@ -5,6 +5,18 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "product")
+@XmlType(propOrder = {
+        "name",
+        "unitPrice",
+        "description",
+        "category",
+        "unitsInStock",
+        "condition"
+})
 @Entity
 public class Product {
     @Id
@@ -15,6 +27,7 @@ public class Product {
 
     private double unitPrice;
 
+    @Column(columnDefinition="TEXT")
     private String description;
 
     private String manufacturer;
