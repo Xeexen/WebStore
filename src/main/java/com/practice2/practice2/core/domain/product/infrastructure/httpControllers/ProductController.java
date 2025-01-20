@@ -110,7 +110,6 @@ public class ProductController {
     }
 
 
-
     @GetMapping("/product/update/{id}")
     public String updateProduct(Model model, @PathVariable String id) {
         Optional<Product> productOptional = this.repository.showProduct(id);
@@ -127,5 +126,9 @@ public class ProductController {
         }
     }
 
-
+    @GetMapping(value = "productXml/{id}", produces = "application/xml")
+    @ResponseBody
+    public Product getProduct(@PathVariable String id) {
+        return repository.showProduct(id).orElse(null);
+    }
 }

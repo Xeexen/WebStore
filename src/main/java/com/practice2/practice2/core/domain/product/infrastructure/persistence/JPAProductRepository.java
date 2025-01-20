@@ -65,8 +65,4 @@ public class JPAProductRepository implements ProductRepository {
         return this.implRepository.findByCategoryAndAndManufacturer(category, manufacturer);
     }
 
-    @Override
-    public String xmlView(Product product) {
-        return "";
-    }
 }

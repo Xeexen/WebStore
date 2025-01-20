@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -136,9 +135,5 @@ public class ProductService {
         file.transferTo(dest);
 
         return relativeFilePath;
-    }
-
-    public String xmlView(Product product) {
-        return repository.xmlView(product);
     }
 }

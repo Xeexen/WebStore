@@ -19,6 +19,4 @@ public interface ProductRepository {
     List<Product> updateAllStock(List<Product> products);
 
     List<Product> getProductsByFilter(String category, String manufacturer);
-
-    String xmlView(Product product);
 }

@@ -1,48 +1,42 @@
 package com.practice2.practice2.core.domain.product.domain;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlRootElement(name = "product")
-@XmlType(propOrder = {
-        "name",
-        "unitPrice",
-        "description",
-        "category",
-        "unitsInStock",
-        "condition"
-})
+@JacksonXmlRootElement(localName = "product")
 @Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-
+    @JacksonXmlProperty
     private String name;
-
+    @JacksonXmlProperty
     private double unitPrice;
-
-    @Column(columnDefinition="TEXT")
+    @JacksonXmlProperty
     private String description;
-
+    @JacksonXmlProperty
     private String manufacturer;
-
+    @JacksonXmlProperty
     private String category;
-
+    @JacksonXmlProperty
     private Long unitsInStock;
-
+    @JacksonXmlProperty
     private Long unitsInOrder;
-
+    @JacksonXmlProperty
     @ColumnDefault("false")
     private boolean discontinued;
-
+    @JacksonXmlProperty
     private String condition;
-
+    @JacksonXmlProperty
     @Nullable
     private String image;
 
