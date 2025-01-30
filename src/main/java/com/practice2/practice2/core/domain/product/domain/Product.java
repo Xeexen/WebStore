@@ -3,13 +3,12 @@ package com.practice2.practice2.core.domain.product.domain;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.ColumnDefault;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 @JacksonXmlRootElement(localName = "product")
 @Entity
@@ -17,16 +16,22 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    @NotBlank(message = "Field Product could not be null")
     @JacksonXmlProperty
     private String name;
+    @NotBlank(message = "Field Unit Price could not be null")
     @JacksonXmlProperty
     private double unitPrice;
+    @NotBlank(message = "Field Description could not be null")
     @JacksonXmlProperty
     private String description;
+    @NotBlank(message = "Field Manufacturer could not be null")
     @JacksonXmlProperty
     private String manufacturer;
+    @NotBlank(message = "Field Category could not be null")
     @JacksonXmlProperty
     private String category;
+    @NotBlank(message = "Field Units in Stock could not be null")
     @JacksonXmlProperty
     private Long unitsInStock;
     @JacksonXmlProperty
@@ -35,6 +40,7 @@ public class Product {
     @ColumnDefault("false")
     private boolean discontinued;
     @JacksonXmlProperty
+    @NotBlank(message = "Field condition could not be null")
     private String condition;
     @JacksonXmlProperty
     @Nullable

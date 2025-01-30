@@ -18,6 +18,9 @@
         </div>
     </div>
 </div>
+<div th:if="${param.error}">
+    Error de formulario
+</div>
 <div>
     <div style="position: fixed; bottom: 0; width: 100%; text-align: right; padding: 10px; background-color: #f1f1f1;">
         <form method="get" action="/">
@@ -33,39 +36,45 @@
                   enctype="multipart/form-data" th:object="${product}" th:method="put">
                 <div class="p-3">
                     <div class="form-group row my-2">
-                        <label class="col-sm-3 col-form-label" for="name">Naam</label>
+                        <label class="col-sm-3 col-form-label" for="name">name</label>
                         <div class="col-sm-9">
                             <input type="text" th:field="*{name}" required minlength="2" maxlength="128"
                                    class="form-control"
                                    id="name"/>
+                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+
                         </div>
                     </div>
                     <div class="form-group row my-2">
                         <label class="col-sm-3 col-form-label"
-                               for="description">Beschrijving</label>
+                               for="description">description</label>
                         <div class="col-sm-9">
                             <input type="text" th:field="*{description}" minlength="2" maxlength="256"
                                    class="form-control"
                                    id="description"
                                    required/>
+                            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</div>
+
                         </div>
                     </div>
                     <div class="form-group row my-2">
-                        <label class="col-sm-3 col-form-label" for="unitPrice">prijs per eenheid</label>
+                        <label class="col-sm-3 col-form-label" for="unitPrice">Unit Price</label>
                         <div class="col-sm-9">
                             <input type="number" step="0.01" th:field="*{unitPrice}" required
                                    class="form-control" id="unitPrice"/>
+                            <div th:if="${#fields.hasErrors('unitPrice')}" th:errors="*{unitPrice}">Unit Price Error</div>
                         </div>
                     </div>
                     <div class="form-group row my-2">
-                        <label class="col-sm-3 col-form-label" for="manufacturer">fabrikant</label>
+                        <label class="col-sm-3 col-form-label" for="manufacturer">Manufacturer</label>
                         <div class="col-sm-9">
                             <input type="text" th:field="*{manufacturer}" required
                                    class="form-control" id="manufacturer"/>
+                            <div th:if="${#fields.hasErrors('manufacturer')}" th:errors="*{manufacturer}">Manufacturer Error</div>
                         </div>
                     </div>
                     <div class="form-group row my-2">
-                        <label class="col-3 col-form-label" for="category">categorie</label>
+                        <label class="col-3 col-form-label" for="category">Category</label>
                         <div class="col-6">
                             <select class="form-control" id="category" required th:field="*{category}">
                                 <option value="" selected>Seleccione una</option>
@@ -81,16 +90,19 @@
                                 <option value="Electrodomesticos">Electrodomésticos</option>
                             </select>
                         </div>
+                        <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Category Error</div>
+
                     </div>
                     <div class="form-group row my-2">
-                        <label class="col-sm-3 col-form-label" for="unitsInStock">Aantal op voorraad</label>
+                        <label class="col-sm-3 col-form-label" for="unitsInStock">Units in stock</label>
                         <div class="col-sm-9">
                             <input type="number" th:field="*{unitsInStock}" required
                                    class="form-control" id="unitsInStock"/>
                         </div>
+                        <div th:if="${#fields.hasErrors('unitsInStock')}" th:errors="*{unitsInStock}">Units in Stock Error</div>
                     </div>
                     <div class="form-group row my-2">
-                        <label class="col-sm-3 col-form-label">Product Staat</label>
+                        <label class="col-sm-3 col-form-label">Condition</label>
                         <ul class="col-sm-9">
                             <li>
                                 <input type="radio" th:field="*{condition}" value="nuevo">
@@ -101,9 +113,10 @@
                                 <label class="col-sm-3 col-form-label">Refurbished</label>
                             </li>
                         </ul>
+                        <div th:if="${#fields.hasErrors('condition')}" th:errors="*{condition}">Condition Error</div>
                     </div>
                     <div class="form-group row my-2">
-                        <label class="col-sm-3 col-form-label">product afbeelding</label>
+                        <label class="col-sm-3 col-form-label">Image</label>
                         <div class="col-sm-9">
                             <input type="file" name="file" class="form-control">
                         </div>

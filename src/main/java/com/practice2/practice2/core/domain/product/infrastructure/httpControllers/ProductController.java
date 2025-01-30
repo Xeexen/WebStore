@@ -2,18 +2,21 @@ package com.practice2.practice2.core.domain.product.infrastructure.httpControlle
 
 import com.practice2.practice2.core.domain.product.application.ProductService;
 import com.practice2.practice2.core.domain.product.domain.Product;
+import jakarta.validation.Valid;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class ProductController {
+public class ProductController implements WebMvcConfigurer {
 
     private final ProductService repository;
 
@@ -46,7 +49,10 @@ public class ProductController {
     }
 
     @PostMapping("/product/add")
-    public String create(Product product, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+    public String create(@Valid Product product, @RequestParam("file") MultipartFile file, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "Product_form";
+        }
         try {
             this.repository.createProduct(product, file);
         } catch (Exception e) {
